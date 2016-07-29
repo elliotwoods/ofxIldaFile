@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{46ca37a8-96d2-4d32-a8ec-de5571a7c3e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ofxIldaFile">
+      <UniqueIdentifier>{5fb80ebb-6f06-40a2-a16f-8ff51e2c66c5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\ofxIldaFile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\Frame.h">
+      <Filter>src\ofxIlda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\Records.h">
+      <Filter>src\ofxIlda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\Sequence.h">
+      <Filter>src\ofxIlda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\Endian.h">
+      <Filter>src\ofxIlda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\ColorPalette.h">
+      <Filter>src\ofxIlda</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\ofxIldaFile\Frame.cpp">
+      <Filter>src\ofxIlda</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxIldaFile\Sequence.cpp">
+      <Filter>src\ofxIlda</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxIldaFile\Records.cpp">
+      <Filter>src\ofxIlda</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxIldaFile\ColorPalette.cpp">
+      <Filter>src\ofxIlda</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
