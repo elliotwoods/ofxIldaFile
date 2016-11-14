@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 	class Sequence : ofBaseDraws {
 	public:
 		void load(const string & filename);
@@ -18,6 +18,11 @@ namespace ofxIlda {
 		float getHeight() const override;
 		float getWidth() const override;
 
+		vector<shared_ptr<Frame>> getFrames();
+		const vector<shared_ptr<Frame>> getFrames() const;
+		void addFrame(shared_ptr<Frame>);
+
+		size_t size() const;
 	protected:
 		vector<shared_ptr<Frame>> frames;
 	};

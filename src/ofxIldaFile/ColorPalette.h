@@ -3,7 +3,7 @@
 #include "ofColor.h"
 #include "Records.h"
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 	class ColorPalette {
 	public:
 		//get singleton

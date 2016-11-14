@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 	class Frame : ofBaseDraws {
 		public:
 			enum Format : uint8_t {
@@ -39,6 +39,9 @@ namespace ofxIlda {
 			Frame();
 			void setHeader(const Header &);
 			const Header & getHeader() const;
+			
+			void buildHeader();
+			void writeHeader(ostream &, size_t totalFrames);
 
 			virtual void readRecords(istream &, size_t numberOfRecords) = 0; // returns number of records written
 			virtual size_t writeRecords(ostream &) const = 0;
@@ -56,6 +59,9 @@ namespace ofxIlda {
 			//
 			//--
 
+			virtual Format getFormat() const = 0;
+			virtual size_t size() const = 0;
+			virtual void clear() = 0;
 	protected:
 			Header header;
 	};
@@ -72,8 +78,9 @@ namespace ofxIlda {
 
 		void readRecords(istream &, size_t numberOfRecords) override;
 		size_t writeRecords(ostream &) const override; // returns number of records written
+		size_t size() const override { return this->records.size(); }
+		void clear() override { this->records.clear(); }
 	protected:
-		void updateHeader();
 		vector<Record> records;
 	};
 
@@ -81,29 +88,34 @@ namespace ofxIlda {
 	class Frame_Format0 : public Frame_<Records::Format0> {
 	public:
 		void draw() const override;
+		Format getFormat() const override { return Frame::Format_0;  }
 	};
 
 	// 2D Coordinates with Indexed Color
 	class Frame_Format1 : public Frame_<Records::Format1> {
 	public:
 		void draw() const override;
+		Format getFormat() const override { return Frame::Format_1; }
 	};
 
 	// Color Palette
 	class Frame_Format2 : public Frame_<Records::Format2> {
 	public:
 		void draw() const override;
+		Format getFormat() const override { return Frame::Format_2; }
 	};
 
 	// 3D Coordinates with True Color
 	class Frame_Format4 : public Frame_<Records::Format4> {
 	public:
 		void draw() const override;
+		Format getFormat() const override { return Frame::Format_4; }
 	};
 
 	// 2D Coordinates with True Color
 	class Frame_Format5 : public Frame_<Records::Format5> {
 	public:
 		void draw() const override;
+		Format getFormat() const override { return Frame::Format_5; }
 	};
 }

@@ -3,7 +3,7 @@
 #include <fstream>
 #include "ofUtils.h"
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 	//----------
 	void Sequence::load(const string & filename) {
 		try {
@@ -17,7 +17,7 @@ namespace ofxIlda {
 
 			while (!file.eof()) {
 				//try and read the header
-				ofxIlda::Frame::Header header;
+				ofxIldaFile::Frame::Header header;
 				file.read( (char*) & header, sizeof(header));
 
 				//now swap the endian for > 8bit values (what were ILDA thinking??)
@@ -66,7 +66,7 @@ namespace ofxIlda {
 			file.close();
 		}
 		catch (std::exception e) {
-			ofLogError("ofxIlda::File::load") << "Failed : " << e.what();
+			ofLogError("ofxIldaFile::File::load") << "Failed : " << e.what();
 		}
 	}
 
@@ -74,32 +74,27 @@ namespace ofxIlda {
 	void Sequence::save(const string & filename) const {
 		try {
 			ofstream file;
-			file.open(filename, ios::out | ios::binary);
-			if (!file) {
-				throw(std::exception());
+			file.open(ofToDataPath(filename).c_str(), ios::out | ios::binary | ios::trunc);
+			if (!file.is_open()) {
+				throw(std::exception("Cannot open file for writing"));
 			}
 
 			//write frames
 			for (auto & frame : this->frames) {
-				auto header = frame->getHeader();
-				header.totalFrames = this->frames.size();
-
-				//now swap the endian for > 8bit values (what were ILDA thinking??)
-				header.swapEndian();
-
-				file.write((char*)& header, sizeof(header));
+				frame->writeHeader(file, this->frames.size());
 				frame->writeRecords(file);
 			}
 
 			//write empty frame at end
 			{
 				auto endFrame = Frame_Format0();
-				endFrame.writeRecords(file);
+				endFrame.writeHeader(file, this->frames.size());
 			}
 			
+			file.close();
 		}
 		catch (std::exception e) {
-			ofLogError("ofxIlda::File::save") << "Failed : " << e.what();
+			ofLogError("ofxIldaFile::File::save") << "Failed : " << e.what();
 		}
 	}
 
@@ -118,5 +113,25 @@ namespace ofxIlda {
 	//----------
 	float Sequence::getWidth() const {
 		return 1.0f;
+	}
+
+	//----------
+	std::vector<shared_ptr<ofxIldaFile::Frame>> Sequence::getFrames() {
+		return this->frames;
+	}
+
+	//----------
+	const std::vector<shared_ptr<ofxIldaFile::Frame>> Sequence::getFrames() const {
+		return this->frames;
+	}
+
+	//----------
+	void Sequence::addFrame(shared_ptr<Frame> frame) {
+		this->frames.push_back(frame);
+	}
+
+	//----------
+	size_t Sequence::size() const {
+		return this->frames.size();
 	}
 }

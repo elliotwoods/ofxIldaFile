@@ -12,34 +12,34 @@
     <ClInclude Include="..\src\ofxIldaFile.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ofxIldaFile\Frame.h">
-      <Filter>src\ofxIlda</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxIldaFile\Records.h">
-      <Filter>src\ofxIlda</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxIldaFile\Sequence.h">
-      <Filter>src\ofxIlda</Filter>
+    <ClInclude Include="..\src\ofxIldaFile\ColorPalette.h">
+      <Filter>src\ofxIldaFile</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxIldaFile\Endian.h">
-      <Filter>src\ofxIlda</Filter>
+      <Filter>src\ofxIldaFile</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ofxIldaFile\ColorPalette.h">
-      <Filter>src\ofxIlda</Filter>
+    <ClInclude Include="..\src\ofxIldaFile\Records.h">
+      <Filter>src\ofxIldaFile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\Sequence.h">
+      <Filter>src\ofxIldaFile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxIldaFile\Frame.h">
+      <Filter>src\ofxIldaFile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\ofxIldaFile\Frame.cpp">
-      <Filter>src\ofxIlda</Filter>
+    <ClCompile Include="..\src\ofxIldaFile\ColorPalette.cpp">
+      <Filter>src\ofxIldaFile</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ofxIldaFile\Sequence.cpp">
-      <Filter>src\ofxIlda</Filter>
+    <ClCompile Include="..\src\ofxIldaFile\Frame.cpp">
+      <Filter>src\ofxIldaFile</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ofxIldaFile\Records.cpp">
-      <Filter>src\ofxIlda</Filter>
+      <Filter>src\ofxIldaFile</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ofxIldaFile\ColorPalette.cpp">
-      <Filter>src\ofxIlda</Filter>
+    <ClCompile Include="..\src\ofxIldaFile\Sequence.cpp">
+      <Filter>src\ofxIldaFile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

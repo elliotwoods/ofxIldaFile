@@ -2,7 +2,7 @@
 
 #include "ofGraphics.h"
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 	//----------
 	ColorPalette & ColorPalette::X() {
 		static unique_ptr<ColorPalette> colorPalette = make_unique<ColorPalette>();
@@ -35,7 +35,7 @@ namespace ofxIlda {
 			this->loadDefaultPalette();
 		}
 		else if (index >= this->colors.size()) {
-			ofLogWarning("ofxIlda::ColorPalette") << "Color index [" << index << "] outside bounds of currently loaded palette.";
+			ofLogWarning("ofxIldaFile::ColorPalette") << "Color index [" << index << "] outside bounds of currently loaded palette.";
 		}
 
 		return this->colors[index];

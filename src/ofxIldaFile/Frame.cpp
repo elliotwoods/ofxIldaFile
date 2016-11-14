@@ -5,7 +5,7 @@
 #include "ofGraphics.h"
 #include "ofMesh.h"
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 #pragma mark Frame::Header
 	//----------
 	void Frame::Header::swapEndian() {
@@ -28,6 +28,23 @@ namespace ofxIlda {
 	//----------
 	const Frame::Header & Frame::getHeader() const {
 		return header;
+	}
+
+	//----------
+	void Frame::buildHeader() {
+		this->header.format = this->getFormat();
+		this->header.recordCount = (uint16_t) this->size();
+	}
+
+	//----------
+	void Frame::writeHeader(ostream & file, size_t totalFrames) {
+		this->buildHeader();
+		auto header = this->getHeader();
+		header.totalFrames = static_cast<uint16_t>(totalFrames);
+
+		//now swap the endian for > 8bit values (what were ILDA thinking??)
+		header.swapEndian();
+		file.write((char*)& header, sizeof(header));
 	}
 
 	//----------
@@ -88,7 +105,7 @@ namespace ofxIlda {
 	template<typename RecordType>
 	void Frame_<RecordType>::addRecord(const Record & record) {
 		this->records.push_back(record);
-		this->updateHeader();
+		this->buildHeader();
 	}
 
 	//----------
@@ -110,12 +127,6 @@ namespace ofxIlda {
 			stream.write((char*)&record, sizeof(Record));
 		}
 		return records.size();
-	}
-
-	//----------
-	template<typename RecordType>
-	void ofxIlda::Frame_<RecordType>::updateHeader() {
-		this->header.recordCount = this->records.size();
 	}
 
 #pragma mark Frame_Format0
@@ -163,8 +174,8 @@ namespace ofxIlda {
 				}
 
 				//end of frame
-				if (record.statusCode & Records::StatusCode::LastPoint) {
-					break;
+				if (record.statusCode & Records::StatusCode::LastPoint || &record == &records.back()) {
+					lineEnds = true;
 				}
 
 				auto vertex = ofVec3f(record.x, record.y, record.z);
@@ -181,7 +192,9 @@ namespace ofxIlda {
 				}
 
 				if (switchColor) {
-					ofSetColor(ColorPalette::X().getColor(record.colorIndex));
+					auto color = ColorPalette::X().getColor(record.colorIndex);
+					ofSetColor(color);
+					currentActiveColor = record.colorIndex;
 				}
 
 				if (lineStarts) {
@@ -318,8 +331,8 @@ namespace ofxIlda {
 	}
 }
 
-template class ofxIlda::Frame_<ofxIlda::Records::Format0>;
-template class ofxIlda::Frame_<ofxIlda::Records::Format1>;
-template class ofxIlda::Frame_<ofxIlda::Records::Format2>;
-template class ofxIlda::Frame_<ofxIlda::Records::Format4>;
-template class ofxIlda::Frame_<ofxIlda::Records::Format5>;
+template class ofxIldaFile::Frame_<ofxIldaFile::Records::Format0>;
+template class ofxIldaFile::Frame_<ofxIldaFile::Records::Format1>;
+template class ofxIldaFile::Frame_<ofxIldaFile::Records::Format2>;
+template class ofxIldaFile::Frame_<ofxIldaFile::Records::Format4>;
+template class ofxIldaFile::Frame_<ofxIldaFile::Records::Format5>;

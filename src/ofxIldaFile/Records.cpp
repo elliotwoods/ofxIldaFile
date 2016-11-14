@@ -1,6 +1,6 @@
 #include "Records.h"
 
-namespace ofxIlda {
+namespace ofxIldaFile {
 
 	//----------
 	void Records::Format0::swapEndian() {
