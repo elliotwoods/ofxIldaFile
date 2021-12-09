@@ -11,8 +11,8 @@ using namespace std;
 namespace ofxIldaFile {
 	class Sequence : ofBaseDraws {
 	public:
-		void load(const string & filename);
-		void save(const string & filename) const;
+        void load(const std::filesystem::path & filename);
+        void save(const std::filesystem::path & filename) const;
 
 		void draw(float x, float y, float w, float h) const override;
 		float getHeight() const override;
