@@ -2,13 +2,14 @@
 
 #include <fstream>
 #include "ofUtils.h"
+#include "ofLog.h"
 
 namespace ofxIldaFile {
 	//----------
-	void Sequence::load(const string & filename) {
+    void Sequence::load(const std::filesystem::path & filename) {
 		try {
-			ifstream file;
-			file.open(ofToDataPath(filename), ios::in | ios::binary);
+            ifstream file;
+            file.open(ofToDataPath(filename), ios::in | ios::binary);
 			if (!file) {
 				throw(std::exception());
 			}
@@ -71,12 +72,12 @@ namespace ofxIldaFile {
 	}
 
 	//----------
-	void Sequence::save(const string & filename) const {
-		try {
-			ofstream file;
-			file.open(ofToDataPath(filename).c_str(), ios::out | ios::binary | ios::trunc);
+    void Sequence::save(const std::filesystem::path & filename) const {
+        try {
+			ofstream file; 
+            file.open(ofToDataPath(filename).c_str(), ios::out | ios::binary | ios::trunc);
 			if (!file.is_open()) {
-				throw(std::exception("Cannot open file for writing"));
+                throw(std::runtime_error("Cannot open file for writing"));
 			}
 
 			//write frames

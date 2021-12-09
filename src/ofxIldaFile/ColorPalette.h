@@ -1,7 +1,12 @@
 #pragma once
 
 #include "ofColor.h"
+#include "ofLog.h"
 #include "Records.h"
+
+using std::vector;
+using std::unique_ptr;
+using std::make_unique;
 
 namespace ofxIldaFile {
 	class ColorPalette {
